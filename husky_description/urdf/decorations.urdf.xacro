@@ -15,6 +15,9 @@
     <xacro:property name="husky_front_bumper_extend" value="$(optenv HUSKY_FRONT_BUMPER_EXTEND 0)" />
     <xacro:property name="husky_rear_bumper_extend" value="$(optenv HUSKY_REAR_BUMPER_EXTEND 0)" />
 
+    <xacro:arg name="user_rail_enabled" default="$(optenv HUSKY_USER_RAIL_ENABLED 1)" />
+    <xacro:arg name="sensor_rail_enabled" default="$(optenv HUSKY_SENSOR_RAIL_ENABLED 1)" />
+
     <!-- Spawn Husky chassis -->
     <link name="top_chassis_link">
       <visual>
@@ -31,7 +34,7 @@
       <child link="top_chassis_link" />
     </joint>
 
-    <xacro:if value="$(optenv HUSKY_USER_RAIL_ENABLED true)">
+    <xacro:if value="$(arg user_rail_enabled)">
       <!-- Spawn user rails -->
       <link name="user_rail_link">
         <visual>
@@ -188,6 +191,12 @@
       <link name="top_plate_rear_link"/>
     </xacro:if>
 
+    <!-- Sensor Rail -->
+    <xacro:if value="$(arg sensor_rail_enabled)">
+      <xacro:sensor_arch prefix="" parent="top_plate_link">
+        <origin xyz="-0.35 0 0.51" rpy="0 0 -3.14"/>
+      </xacro:sensor_arch>
+    </xacro:if>
   </xacro:macro>
 
 </robot>
